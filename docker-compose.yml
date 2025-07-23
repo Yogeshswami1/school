@@ -4,7 +4,7 @@ services:
     build: ./client
     container_name: frontend
     ports:
-      - "3001:80"  # production ke liye 80 port rakho
+      - "3001:80"
     restart: always
 
   backend:
@@ -16,4 +16,16 @@ services:
     env_file:
       - ./server/.env
     depends_on:
-      - frontend
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
